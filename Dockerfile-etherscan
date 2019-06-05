@@ -1,0 +1,7 @@
+FROM centos:7.6.1810
+RUN yum -y install git
+RUN sudo rpm -i http://download.fedoraproject.org/pub/epel/beta/7/x86_64/epel-release-7-0.2.noarch.rpm
+RUN yum -y install nodejs
+RUN git clone https://github.com/etherparty/explorer
+WORKDIR explorer
+CMD []

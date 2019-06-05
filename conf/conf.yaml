@@ -1,0 +1,5 @@
+id-generator:
+   step: 1000
+url-config:
+  redis-url: 47.100.205.196:6379
+  ethereum-url: http://47.100.205.196:8545

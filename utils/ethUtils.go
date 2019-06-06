@@ -2,6 +2,7 @@ package utils
 
 import (
 	"../conf/smartconrtact"
+	"context"
 	"fmt"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind/backends"
@@ -72,12 +73,14 @@ var autheration *bind.TransactOpts
 //server
 //const key = `{"address":"48f84bdb03d39a35b55a6c32cbef1ae960ab17eb","crypto":{"cipher":"aes-128-ctr","ciphertext":"98bfb59d728625da2e321bcd260f099bd0f34b6173d32121c611d85ab7c2c6d2","cipherparams":{"iv":"8e549798d0261c433141f6200e00f2a3"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"4e787078e7cf0504dbe3a86acdf546e779ed9ad903063cf37e32f479653c92bb"},"mac":"29f98ef4e8bb062391b5efaa89a5eb146fe3b63d9f02aef9cd2c2690d31a488e"},"id":"cfc0ec80-12b2-4e95-a883-98534e2acae3","version":3}`
 //local
-const key = `{"address":"12769c3419a7f491cf4e576e2e983e009d579076","crypto":{"cipher":"aes-128-ctr","ciphertext":"215430a18ab1132c6eaecdf966bc0d878a3be06cff5dce173d801afec5002db5","cipherparams":{"iv":"d41d87954da3dfca1f38e14111169fb8"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"d5268e70fbf8666435bf82ee53850f14486810f1944110de2aede933ae97fff1"},"mac":"a80e95fc657473f543bb989da9e8e2cde73e2b8bde52e6b05355b44a40c165ec"},"id":"5e034459-6e81-4208-9e26-c91641d20f5d","version":3}`
+const key = `{"address":"4e0dc4ffa4609989c00183bc4a78b5ea70c33494","crypto":{"cipher":"aes-128-ctr","ciphertext":"ab3eaddba953c02861e539ed93f5c28945267c3435b63c2531bb669f2ebd96cc","cipherparams":{"iv":"d271f17fbd59f57d1de068702b3817e4"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"400aacf467e873f9232418231abcc535934bb027db758fd637ff0739ff6a84f6"},"mac":"00fb7135ce6dbfef42676b786f2459ce894040b686101a35ea726d5ee2780e76"},"id":"064efa43-f6d2-4673-8c27-c56d197695b2","version":3}`
+
 func ConnectEthereum(){
 
 	if clientConnect == nil {
 		mutex.Lock()
 		if clientConnect == nil {
+			fmt.Println("url: ",config.Url.EthereumUrl)
 			conn, err := ethclient.Dial(config.Url.EthereumUrl)
 			if err != nil{
 				log.Fatal(err)
@@ -98,12 +101,12 @@ func DeployContract(){
 		log.Fatal("解锁管理员账户失败",err)
 	}
 	alloc := make(core.GenesisAlloc)
-	alloc[auth.From] = core.GenesisAccount{Balance: big.NewInt(13370000000000)}
+	alloc[auth.From] = core.GenesisAccount{Balance: big.NewInt(1337000000000)}
+
+	balance, err := clientConnect.BalanceAt(context.TODO(),auth.From,nil)
 	fmt.Println("From",auth.From.String())
-	fmt.Println("gasLimit",auth.GasLimit)
-	fmt.Println("gasPrice",auth.GasPrice)
-	fmt.Println("Value",auth.Value)
-	sim := backends.NewSimulatedBackend(alloc, 100)
+	fmt.Println("Balance", balance)
+	sim := backends.NewSimulatedBackend(alloc, 100000000)
 	address,_,token,err := generateId.DeployGenerateId(auth, clientConnect)
 	if err != nil {
 		log.Fatal("部署智能合约失败",err)

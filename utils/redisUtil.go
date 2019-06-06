@@ -9,7 +9,7 @@ import (
 var client redis.Conn
 var IdChannel chan string
 
-func ConnectRedis()(redis.Conn){
+func ConnectRedis(){
 
 
 	if client == nil {
@@ -26,7 +26,6 @@ func ConnectRedis()(redis.Conn){
 		}
 		mutex.Unlock()
 	}
-	return client
 
 
 }

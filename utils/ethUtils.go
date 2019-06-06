@@ -63,7 +63,7 @@ type Block struct {
 var clientConnect *rpc.Client
 var mutex sync.Mutex
 
-func ConnectEthereum()(*rpc.Client){
+func ConnectEthereum(){
 
 	if clientConnect == nil {
 		mutex.Lock()
@@ -77,21 +77,22 @@ func ConnectEthereum()(*rpc.Client){
 		}
 		mutex.Unlock()
 	}
-
-	return clientConnect
 }
 
 
-func DeployContract(conn *rpc.Client){
+func DeployContract(){
 
-
-
-
-}
-
-func SubmitTransaction(conn *rpc.Client){
 
 
 
 }
 
+func SubmitTransaction(){
+
+
+
+}
+
+func GetIdFromSmartContract() string{
+	return "1000"
+}

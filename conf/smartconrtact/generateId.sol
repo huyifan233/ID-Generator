@@ -13,16 +13,16 @@ contract GenerateId{
     }
 
 
-    function getId(uint step) public returns (uint){
-           uint flag = 0;
-           // bytes32 bstep = new bytes(32);
+    function getId(uint step) public returns (uint returnedId){
+        uint flag = 0;
+        // bytes32 bstep = new bytes(32);
 
-           // for(uint i=id.length-1; i>=0 ;i--){
+        // for(uint i=id.length-1; i>=0 ;i--){
 
-           // }
-           intId += step;
-           emit LogId(intId);
-           return intId;
+        // }
+        intId += step;
+        emit LogId(intId);
+        returnedId = intId;
     }
 
     // function toBytes(uint256 x) private returns (bytes b) {

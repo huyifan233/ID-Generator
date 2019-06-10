@@ -32,7 +32,7 @@ func init(){
 	utils.ConnectEthereum()
 	utils.ConnectRedis()
 	utils.DeployContract()
-
+	utils.StartListeningEthereum()
 
 }
 

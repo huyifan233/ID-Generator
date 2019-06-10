@@ -94,6 +94,13 @@ func ConnectEthereum(){
 }
 
 
+func StartListeningEthereum(){
+
+
+
+}
+
+
 func DeployContract(){
 
 	auth, err := bind.NewTransactor(strings.NewReader(key),"abc")

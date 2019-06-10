@@ -18,6 +18,8 @@ func startWebService(){
 	//http.Handle("./template", http.FileServer(http.Dir("template")))
 
 	http.HandleFunc("/ids",core.GetId)
+	http.HandleFunc("/test",core.TestGroutine)
+
 
 	log.Println("Start Listen")
 	err := http.ListenAndServe(":9095", nil)
@@ -32,7 +34,7 @@ func init(){
 	utils.ConnectEthereum()
 	utils.ConnectRedis()
 	utils.DeployContract()
-	utils.StartListeningEthereum()
+	//utils.ListeningTrasactionStatus()
 
 }
 

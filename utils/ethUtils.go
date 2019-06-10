@@ -8,11 +8,13 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi/bind/backends"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core"
+	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"log"
 	"math/big"
 	"strings"
 	"sync"
+	"time"
 )
 
 
@@ -94,10 +96,22 @@ func ConnectEthereum(){
 }
 
 
-func StartListeningEthereum(){
+func ListeningTrasactionStatus(hash common.Hash)(*types.Receipt){
 
+	for{
 
+		reciept, err := clientConnect.TransactionReceipt(context.TODO(), hash)
 
+		if err != nil {
+			log.Fatal("监听交易异常: ",err)
+		}
+
+		if reciept != nil{
+			return reciept
+		}
+		time.Sleep(100)
+
+	}
 }
 
 
@@ -126,9 +140,9 @@ func DeployContract(){
 }
 
 
-func increaseId(){
+func increaseId()(common.Hash){
 
-	_, err := instance.GetId(&bind.TransactOpts{
+	trasnaction, err := instance.GetId(&bind.TransactOpts{
 		From:     autheration.From,
 		Signer:   autheration.Signer,
 		GasLimit: 288162,
@@ -138,15 +152,20 @@ func increaseId(){
 		log.Fatal("增加Id失败",err)
 	}
 	simulate.Commit()
-
+	return  trasnaction.Hash()
 }
 
 func GetIdFromSmartContract() string{
 
-	increaseId()
+	trasnactionHash := increaseId()
+
+	receipt := ListeningTrasactionStatus(trasnactionHash)
+
+	fmt.Println("receipt: ",receipt)
+
 	info, err := instance.IntId(&bind.CallOpts{Pending: true})
 	if err != nil{
-		log.Fatal("获取Id失败",err)
+		log.Fatal("获取Id失败", err)
 	}
 	return info.String()
 }

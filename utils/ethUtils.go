@@ -174,9 +174,9 @@ func SetIdToEthereum(id [32]byte) {
 
 func GetIdFromEthereum() string {
 
-	info, err := instance.Id(&bind.CallOpts{Pending: true})
+	info, err := instance.Id(&bind.CallOpts{Pending: false})
 	if err != nil{
-		log.Fatal("从以太坊中获取id值失败")
+		log.Fatal("从以太坊中获取id值失败:",err)
 	}
 	return string(info[:len(info)])
 }

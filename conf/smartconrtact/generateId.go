@@ -28,10 +28,10 @@ var (
 )
 
 // GenerateIdABI is the input ABI used to generate the binding from.
-const GenerateIdABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"intId\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"step\",\"type\":\"uint256\"}],\"name\":\"getId\",\"outputs\":[{\"name\":\"returnedId\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"id\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"currentId\",\"type\":\"uint256\"}],\"name\":\"LogId\",\"type\":\"event\"}]"
+const GenerateIdABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"_id\",\"type\":\"bytes32\"}],\"name\":\"setId\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"id\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"_id\",\"type\":\"bytes32\"}],\"name\":\"LogId\",\"type\":\"event\"}]"
 
 // GenerateIdBin is the compiled bytecode used for deploying new contracts.
-const GenerateIdBin = `608060405234801561001057600080fd5b506040518060400160405280600181526020017f31000000000000000000000000000000000000000000000000000000000000008152506000908051906020019061005c929190610069565b506001808190555061010e565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106100aa57805160ff19168380011785556100d8565b828001600101855582156100d8579182015b828111156100d75782518255916020019190600101906100bc565b5b5090506100e591906100e9565b5090565b61010b91905b808211156101075760008160009055506001016100ef565b5090565b90565b61025d8061011d6000396000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c80634f4550a114610046578063545a153a14610064578063af640d0f146100a6575b600080fd5b61004e610129565b6040518082815260200191505060405180910390f35b6100906004803603602081101561007a57600080fd5b810190808035906020019092919050505061012f565b6040518082815260200191505060405180910390f35b6100ae61018a565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156100ee5780820151818401526020810190506100d3565b50505050905090810190601f16801561011b5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b60015481565b60008060009050826001600082825401925050819055507f20b868ed97d841eef3a78720764709b7c99a97815fc550ab1fbbbafe64afe6f36001546040518082815260200191505060405180910390a1600154915050919050565b60008054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156102205780601f106101f557610100808354040283529160200191610220565b820191906000526020600020905b81548152906001019060200180831161020357829003601f168201915b50505050508156fea265627a7a72305820ff6252d302da9a3db383355f3f81e5aff8087f8c6569bcf8eb1e298dbc493a7a64736f6c63430005090032`
+const GenerateIdBin = `608060405234801561001057600080fd5b507f310000000000000000000000000000000000000000000000000000000000000060008190555060fc806100466000396000f3fe6080604052348015600f57600080fd5b506004361060325760003560e01c806349bfcf02146037578063af640d0f146062575b600080fd5b606060048036036020811015604b57600080fd5b8101908080359060200190929190505050607e565b005b606860c1565b6040518082815260200191505060405180910390f35b806000819055507f2ec078554f30cba9aad72c89ddc37203c0e04df1058fa6c1959f5be52ca282d46000546040518082815260200191505060405180910390a150565b6000548156fea265627a7a723058204b9d3210285c3b7dacab235da8ed9a9d279f8a994496285682b9ed74251ee29c64736f6c63430005090032`
 
 // DeployGenerateId deploys a new Ethereum contract, binding an instance of GenerateId to it.
 func DeployGenerateId(auth *bind.TransactOpts, backend bind.ContractBackend) (common.Address, *types.Transaction, *GenerateId, error) {
@@ -190,10 +190,10 @@ func (_GenerateId *GenerateIdTransactorRaw) Transact(opts *bind.TransactOpts, me
 
 // Id is a free data retrieval call binding the contract method 0xaf640d0f.
 //
-// Solidity: function id() constant returns(bytes)
-func (_GenerateId *GenerateIdCaller) Id(opts *bind.CallOpts) ([]byte, error) {
+// Solidity: function id() constant returns(bytes32)
+func (_GenerateId *GenerateIdCaller) Id(opts *bind.CallOpts) ([32]byte, error) {
 	var (
-		ret0 = new([]byte)
+		ret0 = new([32]byte)
 	)
 	out := ret0
 	err := _GenerateId.contract.Call(opts, out, "id")
@@ -202,63 +202,37 @@ func (_GenerateId *GenerateIdCaller) Id(opts *bind.CallOpts) ([]byte, error) {
 
 // Id is a free data retrieval call binding the contract method 0xaf640d0f.
 //
-// Solidity: function id() constant returns(bytes)
-func (_GenerateId *GenerateIdSession) Id() ([]byte, error) {
+// Solidity: function id() constant returns(bytes32)
+func (_GenerateId *GenerateIdSession) Id() ([32]byte, error) {
 	return _GenerateId.Contract.Id(&_GenerateId.CallOpts)
 }
 
 // Id is a free data retrieval call binding the contract method 0xaf640d0f.
 //
-// Solidity: function id() constant returns(bytes)
-func (_GenerateId *GenerateIdCallerSession) Id() ([]byte, error) {
+// Solidity: function id() constant returns(bytes32)
+func (_GenerateId *GenerateIdCallerSession) Id() ([32]byte, error) {
 	return _GenerateId.Contract.Id(&_GenerateId.CallOpts)
 }
 
-// IntId is a free data retrieval call binding the contract method 0x4f4550a1.
+// SetId is a paid mutator transaction binding the contract method 0x49bfcf02.
 //
-// Solidity: function intId() constant returns(uint256)
-func (_GenerateId *GenerateIdCaller) IntId(opts *bind.CallOpts) (*big.Int, error) {
-	var (
-		ret0 = new(*big.Int)
-	)
-	out := ret0
-	err := _GenerateId.contract.Call(opts, out, "intId")
-	return *ret0, err
+// Solidity: function setId(bytes32 _id) returns()
+func (_GenerateId *GenerateIdTransactor) SetId(opts *bind.TransactOpts, _id [32]byte) (*types.Transaction, error) {
+	return _GenerateId.contract.Transact(opts, "setId", _id)
 }
 
-// IntId is a free data retrieval call binding the contract method 0x4f4550a1.
+// SetId is a paid mutator transaction binding the contract method 0x49bfcf02.
 //
-// Solidity: function intId() constant returns(uint256)
-func (_GenerateId *GenerateIdSession) IntId() (*big.Int, error) {
-	return _GenerateId.Contract.IntId(&_GenerateId.CallOpts)
+// Solidity: function setId(bytes32 _id) returns()
+func (_GenerateId *GenerateIdSession) SetId(_id [32]byte) (*types.Transaction, error) {
+	return _GenerateId.Contract.SetId(&_GenerateId.TransactOpts, _id)
 }
 
-// IntId is a free data retrieval call binding the contract method 0x4f4550a1.
+// SetId is a paid mutator transaction binding the contract method 0x49bfcf02.
 //
-// Solidity: function intId() constant returns(uint256)
-func (_GenerateId *GenerateIdCallerSession) IntId() (*big.Int, error) {
-	return _GenerateId.Contract.IntId(&_GenerateId.CallOpts)
-}
-
-// GetId is a paid mutator transaction binding the contract method 0x545a153a.
-//
-// Solidity: function getId(uint256 step) returns(uint256 returnedId)
-func (_GenerateId *GenerateIdTransactor) GetId(opts *bind.TransactOpts, step *big.Int) (*types.Transaction, error) {
-	return _GenerateId.contract.Transact(opts, "getId", step)
-}
-
-// GetId is a paid mutator transaction binding the contract method 0x545a153a.
-//
-// Solidity: function getId(uint256 step) returns(uint256 returnedId)
-func (_GenerateId *GenerateIdSession) GetId(step *big.Int) (*types.Transaction, error) {
-	return _GenerateId.Contract.GetId(&_GenerateId.TransactOpts, step)
-}
-
-// GetId is a paid mutator transaction binding the contract method 0x545a153a.
-//
-// Solidity: function getId(uint256 step) returns(uint256 returnedId)
-func (_GenerateId *GenerateIdTransactorSession) GetId(step *big.Int) (*types.Transaction, error) {
-	return _GenerateId.Contract.GetId(&_GenerateId.TransactOpts, step)
+// Solidity: function setId(bytes32 _id) returns()
+func (_GenerateId *GenerateIdTransactorSession) SetId(_id [32]byte) (*types.Transaction, error) {
+	return _GenerateId.Contract.SetId(&_GenerateId.TransactOpts, _id)
 }
 
 // GenerateIdLogIdIterator is returned from FilterLogId and is used to iterate over the raw logs and unpacked data for LogId events raised by the GenerateId contract.
@@ -330,13 +304,13 @@ func (it *GenerateIdLogIdIterator) Close() error {
 
 // GenerateIdLogId represents a LogId event raised by the GenerateId contract.
 type GenerateIdLogId struct {
-	CurrentId *big.Int
-	Raw       types.Log // Blockchain specific contextual infos
+	Id  [32]byte
+	Raw types.Log // Blockchain specific contextual infos
 }
 
-// FilterLogId is a free log retrieval operation binding the contract event 0x20b868ed97d841eef3a78720764709b7c99a97815fc550ab1fbbbafe64afe6f3.
+// FilterLogId is a free log retrieval operation binding the contract event 0x2ec078554f30cba9aad72c89ddc37203c0e04df1058fa6c1959f5be52ca282d4.
 //
-// Solidity: event LogId(uint256 currentId)
+// Solidity: event LogId(bytes32 _id)
 func (_GenerateId *GenerateIdFilterer) FilterLogId(opts *bind.FilterOpts) (*GenerateIdLogIdIterator, error) {
 
 	logs, sub, err := _GenerateId.contract.FilterLogs(opts, "LogId")
@@ -346,9 +320,9 @@ func (_GenerateId *GenerateIdFilterer) FilterLogId(opts *bind.FilterOpts) (*Gene
 	return &GenerateIdLogIdIterator{contract: _GenerateId.contract, event: "LogId", logs: logs, sub: sub}, nil
 }
 
-// WatchLogId is a free log subscription operation binding the contract event 0x20b868ed97d841eef3a78720764709b7c99a97815fc550ab1fbbbafe64afe6f3.
+// WatchLogId is a free log subscription operation binding the contract event 0x2ec078554f30cba9aad72c89ddc37203c0e04df1058fa6c1959f5be52ca282d4.
 //
-// Solidity: event LogId(uint256 currentId)
+// Solidity: event LogId(bytes32 _id)
 func (_GenerateId *GenerateIdFilterer) WatchLogId(opts *bind.WatchOpts, sink chan<- *GenerateIdLogId) (event.Subscription, error) {
 
 	logs, sub, err := _GenerateId.contract.WatchLogs(opts, "LogId")

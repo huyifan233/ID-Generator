@@ -140,32 +140,43 @@ func DeployContract(){
 }
 
 
-func increaseId()(common.Hash){
+func WaitPendingTrasnactions(){
 
-	trasnaction, err := instance.GetId(&bind.TransactOpts{
+	for{
+		count, err := clientConnect.PendingTransactionCount(context.TODO())
+		if err != nil{
+			log.Fatal("获取等待中的交易失败: ",err)
+		}
+		if count == 0{
+			break
+		}
+		time.Sleep(time.Duration(100)*time.Millisecond)
+	}
+
+}
+
+
+
+func SetIdToEthereum(id [32]byte) {
+
+	_, err := instance.SetId(&bind.TransactOpts{
 		From:     autheration.From,
 		Signer:   autheration.Signer,
 		GasLimit: 288162,
 		Value:    big.NewInt(30),
-	},big.NewInt(1000))
-	if err!= nil{
-		log.Fatal("增加Id失败",err)
+	}, id)
+	if err != nil{
+		log.Fatal("将值设置到以太坊失败: ",err)
 	}
 	simulate.Commit()
-	return  trasnaction.Hash()
+
 }
 
-func GetIdFromSmartContract() string{
+func GetIdFromEthereum() string {
 
-	trasnactionHash := increaseId()
-
-	receipt := ListeningTrasactionStatus(trasnactionHash)
-
-	fmt.Println("receipt: ",receipt)
-
-	info, err := instance.IntId(&bind.CallOpts{Pending: true})
+	info, err := instance.Id(&bind.CallOpts{Pending: true})
 	if err != nil{
-		log.Fatal("获取Id失败", err)
+		log.Fatal("从以太坊中获取id值失败")
 	}
-	return info.String()
+	return string(info[:len(info)])
 }

@@ -18,7 +18,6 @@ func startWebService(){
 	//http.Handle("./template", http.FileServer(http.Dir("template")))
 
 	http.HandleFunc("/ids",core.GetId)
-	http.HandleFunc("/test",core.TestGroutine)
 
 
 	log.Println("Start Listen")
@@ -35,7 +34,7 @@ func init(){
 	utils.ConnectRedis()
 	utils.DeployContract()
 	//utils.ListeningTrasactionStatus()
-
+	core.Id[0] = '1'
 }
 
 

@@ -6,7 +6,7 @@ import (
 )
 
 var client redis.Conn
-var IdChannel chan string
+//var IdChannel chan string
 
 func ConnectRedis(){
 
@@ -20,7 +20,7 @@ func ConnectRedis(){
 				Log.Error("连接redis失败",err)
 			}else{
 				client = conn
-				IdChannel = make(chan string)
+				//IdChannel = make(chan string)
 			}
 		}
 		mutex.Unlock()
@@ -49,28 +49,28 @@ func SetValue(key string, value string){
 	}
 }
 
-func SubscribeChannel(){
-
-	//err := client.Send("SUBSCRIBE","idChannel")
-	client.Do("auth","Abcd1234")
-	psc := redis.PubSubConn{client}
-	err := psc.Subscribe("idChannel")
-	if err != nil{
-		Log.Error("订阅Channel失败")
-	}
-
-	for{
-		switch reply := psc.Receive().(type) {
-		case redis.Message:
-			IdChannel <- string(reply.Data)
-		case redis.Subscription:
-			fmt.Printf("%s: %s %d\n", reply.Channel, reply.Kind, reply.Count)
-		case error:
-			fmt.Println(reply)
-		}
-
-	}
-}
+//func SubscribeChannel(){
+//
+//	//err := client.Send("SUBSCRIBE","idChannel")
+//	client.Do("auth","Abcd1234")
+//	psc := redis.PubSubConn{client}
+//	err := psc.Subscribe("idChannel")
+//	if err != nil{
+//		Log.Error("订阅Channel失败")
+//	}
+//
+//	for{
+//		switch reply := psc.Receive().(type) {
+//		case redis.Message:
+//			IdChannel <- string(reply.Data)
+//		case redis.Subscription:
+//			fmt.Printf("%s: %s %d\n", reply.Channel, reply.Kind, reply.Count)
+//		case error:
+//			fmt.Println(reply)
+//		}
+//
+//	}
+//}
 
 func PublishValue(value string){
 

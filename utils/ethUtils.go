@@ -70,7 +70,8 @@ var simulate *backends.SimulatedBackend
 var instance *generateId.GenerateId
 var contractAddress common.Address
 var autheration *bind.TransactOpts
-var Nonce int64
+var count int64
+var IdChannel chan string
 //server
 //const key = `{"address":"48f84bdb03d39a35b55a6c32cbef1ae960ab17eb","crypto":{"cipher":"aes-128-ctr","ciphertext":"98bfb59d728625da2e321bcd260f099bd0f34b6173d32121c611d85ab7c2c6d2","cipherparams":{"iv":"8e549798d0261c433141f6200e00f2a3"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"4e787078e7cf0504dbe3a86acdf546e779ed9ad903063cf37e32f479653c92bb"},"mac":"29f98ef4e8bb062391b5efaa89a5eb146fe3b63d9f02aef9cd2c2690d31a488e"},"id":"cfc0ec80-12b2-4e95-a883-98534e2acae3","version":3}`
 //local
@@ -139,6 +140,8 @@ func NewContract(){
 	simulate = sim
 	instance = token
 	autheration = auth
+
+
 }
 
 
@@ -150,6 +153,7 @@ func WaitPendingTrasnactions(){
 			Log.Error("获取等待中的交易失败: ",err)
 		}
 		if count == 0{
+
 			break
 		}
 		time.Sleep(time.Duration(100)*time.Millisecond)
@@ -157,22 +161,40 @@ func WaitPendingTrasnactions(){
 
 }
 
+func WaitUtilHavePendingTrasnactions(){
+	for{
+		count, err := clientConnect.PendingTransactionCount(context.TODO())
+		if err != nil{
+			Log.Error("获取等待中的交易失败: ",err)
+		}
+		if count != 0{
+
+			break
+		}
+		time.Sleep(time.Duration(100)*time.Millisecond)
+	}
+}
+
+
+
+
 
 
 func SetIdToEthereum(id [32]byte) {
 
 	//count,_ := clientConnect.PendingNonceAt(context.TODO(),common.HexToAddress(config.Ec.EthereumAdminAccount))
+	//count0 ,_ := clientConnect.PendingNonceAt(context.TODO(),common.HexToAddress(config.Ec.EthereumContractAddress))
+	//Log.Info("当前的Nonce值： ",count0)
 	_, err := instance.SetId(&bind.TransactOpts{
 		From:     autheration.From,
 		Signer:   autheration.Signer,
 		GasLimit: 288162,
-		Value:    big.NewInt(30),
-		//Nonce:	  big.NewInt(int64(count+21212)),
+		Value:    big.NewInt(0),
+		//Nonce:	  big.NewInt(count),
 	}, id)
 	if err != nil{
 		Log.Error("将值设置到以太坊失败: ",err)
 	}
-	//Nonce++
 	simulate.Commit()
 
 }

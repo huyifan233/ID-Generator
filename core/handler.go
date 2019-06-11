@@ -3,7 +3,6 @@ package core
 import (
 	"../utils"
 	"net/http"
-	"strings"
 	"sync"
 )
 
@@ -16,26 +15,37 @@ func setHeaders(w http.ResponseWriter){
 
 var Id [32]byte
 var mutex sync.Mutex
+var channelMutex sync.Mutex
+
+
+
 
 func GetId(w http.ResponseWriter, r *http.Request){
 
 	setHeaders(w)
-	utils.WaitPendingTrasnactions()
-	id := utils.GetIdFromEthereum()
-	if strings.Compare(string(Id[:len(Id)]),id) != 0 {
-		Id = utils.ConvertStringTobyte32(id)
-		utils.Log.Info("Id值被篡改，从区块链中恢复")
-	}
-	validLen := utils.GetValidLen(Id)
-	utils.Log.Info("当前的Id值: ",string(Id[:validLen]))
 
 	mutex.Lock()
-	Id = utils.ConvertStringTobyte32(utils.Add(string(Id[:validLen]),"1000"))
-	mutex.Unlock()
+	utils.WaitPendingTrasnactions()
+	id := utils.GetIdFromEthereum()
+	//if strings.Compare(string(Id[:len(Id)]),id) != 0 {
+	//	Id = utils.ConvertStringTobyte32(id)
+	//	utils.Log.Info("Id值被篡改，从区块链中恢复")
+	//}
+	validLen := utils.GetValidLen(utils.ConvertStringTobyte32(id))
+	utils.Log.Info("当前的Id值: ",id)
+	Id = utils.ConvertStringTobyte32(utils.Add(string(id[:validLen])))
+
 
 	validLen = utils.GetValidLen(Id)
+	utils.Log.Info("有效长度: ",validLen)
 	utils.Log.Info("增加后的Id值: ",string(Id[:validLen]))
-	go utils.SetIdToEthereum(Id)
+
+	//channelMutex.Lock()
+	//utils.IdChannel <- string(Id[:validLen])
+	//channelMutex.Unlock()
+	utils.SetIdToEthereum(Id)
+	utils.WaitUtilHavePendingTrasnactions()
+	mutex.Unlock()
 	validLen = utils.GetValidLen(Id)
 	_, err := w.Write([]byte(string(Id[:validLen])))
 	if err != nil{

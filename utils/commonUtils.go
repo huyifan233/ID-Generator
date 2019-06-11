@@ -24,7 +24,9 @@ func GetValidLen(str [32]byte)(int){
 }
 
 
-func Add(numa string, numb string)(string){
+func Add(numa string)(string){
+
+	numb := config.Ec.EthereumIdStep
 
 	for len(numa) > len(numb){
 		numb = "0"+numb
@@ -45,7 +47,7 @@ func Add(numa string, numb string)(string){
 		lenb--
 	}
 	if flag != 0{
-		ans = string(flag) + ans
+		ans = string(flag + '0') + ans
 	}
 	return ans
 }

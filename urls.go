@@ -18,7 +18,6 @@ func startWebService(){
 
 	http.HandleFunc("/ids",core.GetId)
 
-
 	log.Println("Start Listen")
 	err := http.ListenAndServe(":9095", nil)
 	if err != nil {
@@ -35,8 +34,10 @@ func init(){
 	utils.NewContract()
 	utils.InitLogFactory()
 	//utils.ListeningTrasactionStatus()
+	utils.IdChannel = make(chan string)
+
 	core.Id[0] = '0'
-	utils.Nonce = 1
+
 }
 
 

@@ -8,4 +8,4 @@ ethereum-config:
   ethereum-admin-address: 0x4e0dc4ffa4609989c00183bc4a78b5ea70c33494
   ethereum-admin-password: abc
   ethereum-id-step: 1000
-  ethereum-contract-address: 0xaa23990838756dea2ed3eccad75be6ef87bdee97
+  ethereum-contract-address: 0x6b79fe96c6d610622730d4750e653406e9ada1c8

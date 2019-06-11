@@ -1,7 +1,5 @@
 package utils
 
-import "fmt"
-
 func ConvertStringTobyte32(str string)([32]byte){
 
 	var bytes32 [32]byte
@@ -28,8 +26,6 @@ func GetValidLen(str [32]byte)(int){
 
 func Add(numa string, numb string)(string){
 
-	fmt.Println("lena: ",len(numa))
-	fmt.Println("lenb: ",len(numb))
 	for len(numa) > len(numb){
 		numb = "0"+numb
 	}

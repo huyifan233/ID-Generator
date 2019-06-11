@@ -3,7 +3,6 @@ package utils
 import (
 	"fmt"
 	"github.com/garyburd/redigo/redis"
-	"log"
 )
 
 var client redis.Conn
@@ -18,7 +17,7 @@ func ConnectRedis(){
 			fmt.Println( config.Url.RedisUrl)
 			conn, err := redis.Dial("tcp", config.Url.RedisUrl)
 			if err != nil{
-				log.Fatal("连接redis失败",err)
+				Log.Error("连接redis失败",err)
 			}else{
 				client = conn
 				IdChannel = make(chan string)
@@ -34,7 +33,7 @@ func GetValue(key string)(string){
 	result, err := redis.String(client.Do("get",key))
 
 	if err != nil {
-		log.Fatal("获取key失败",err)
+		Log.Error("获取key失败",err)
 	}
 	return result
 }
@@ -42,11 +41,11 @@ func GetValue(key string)(string){
 func SetValue(key string, value string){
 	_, err := client.Do("set",key, value)
 	if err != nil{
-		log.Fatal("插入数据到redis失败",err)
+		Log.Error("插入数据到redis失败",err)
 	}
 	_,err2 := client.Do("PUBLISH","idChannel",value)
 	if err2 != nil {
-		log.Fatal("发布数据发布数据失败")
+		Log.Error("发布数据发布数据失败")
 	}
 }
 
@@ -57,7 +56,7 @@ func SubscribeChannel(){
 	psc := redis.PubSubConn{client}
 	err := psc.Subscribe("idChannel")
 	if err != nil{
-		log.Fatal("订阅Channel失败")
+		Log.Error("订阅Channel失败")
 	}
 
 	for{

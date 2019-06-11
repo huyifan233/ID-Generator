@@ -1,11 +1,10 @@
 package main
 
 import (
-
-	"log"
-	"net/http"
 	"./core"
 	"./utils"
+	"log"
+	"net/http"
 )
 
 
@@ -34,8 +33,10 @@ func init(){
 	utils.ConnectRedis()
 	//utils.DeployContract()
 	utils.NewContract()
+	utils.InitLogFactory()
 	//utils.ListeningTrasactionStatus()
-	core.Id[0] = '1'
+	core.Id[0] = '0'
+	utils.Nonce = 1
 }
 
 

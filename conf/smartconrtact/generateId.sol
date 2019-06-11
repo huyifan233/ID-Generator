@@ -11,7 +11,10 @@ contract GenerateId{
 
 
     function setId(bytes32 _id) payable public {
-        id = _id;
+        if(id < _id){
+            id = _id;
+        }
+
         emit LogId(id);
     }
 

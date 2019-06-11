@@ -4,7 +4,7 @@ url-config:
   redis-url: 47.100.205.196:6379
   ethereum-url: http://127.0.0.1:8546
 ethereum-config:
-  ethereum-admin-account: {"address":"48f84bdb03d39a35b55a6c32cbef1ae960ab17eb","crypto":{"cipher":"aes-128-ctr","ciphertext":"98bfb59d728625da2e321bcd260f099bd0f34b6173d32121c611d85ab7c2c6d2","cipherparams":{"iv":"8e549798d0261c433141f6200e00f2a3"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"4e787078e7cf0504dbe3a86acdf546e779ed9ad903063cf37e32f479653c92bb"},"mac":"29f98ef4e8bb062391b5efaa89a5eb146fe3b63d9f02aef9cd2c2690d31a488e"},"id":"cfc0ec80-12b2-4e95-a883-98534e2acae3","version":3}
+  ethereum-admin-account: '{"address":"4e0dc4ffa4609989c00183bc4a78b5ea70c33494","crypto":{"cipher":"aes-128-ctr","ciphertext":"ab3eaddba953c02861e539ed93f5c28945267c3435b63c2531bb669f2ebd96cc","cipherparams":{"iv":"d271f17fbd59f57d1de068702b3817e4"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"400aacf467e873f9232418231abcc535934bb027db758fd637ff0739ff6a84f6"},"mac":"00fb7135ce6dbfef42676b786f2459ce894040b686101a35ea726d5ee2780e76"},"id":"064efa43-f6d2-4673-8c27-c56d197695b2","version":3}'
   ethereum-admin-password: abc
   ethereum-id-step: 1000
-  ethereum-contract-address:
+  ethereum-contract-address: 0x1fc119312ac82e3d201d6af3f41cc3293b45c008

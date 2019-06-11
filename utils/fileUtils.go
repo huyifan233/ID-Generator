@@ -3,12 +3,13 @@ package utils
 import (
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
-	"log"
+	"path/filepath"
 )
 
 type Config struct {
 	IdGenerator IDGen `yaml:"id-generator"`
 	Url UrlConfig `yaml:"url-config"`
+	Ec EthereumConfig `yaml:"ethereum-config"`
 }
 
 type IDGen struct {
@@ -20,14 +21,24 @@ type UrlConfig struct {
 	EthereumUrl string `yaml:"ethereum-url"`
 }
 
+type EthereumConfig struct {
+	EthereumAdminAccount string `yaml:"ethereum-admin-account"`
+	EthereumAdminPassword string `yaml:"ethereum-admin-password"`
+	EthereumIdStep string `yaml:"ethereum-id-step"`
+	EthereumContractAddress string `yaml:"ethereum-contract-address"`
+}
+
 var config Config
 
 func GetYaml()(){
 
-	//abspath,_ := filepath.Abs("conf/conf.yaml")
-	yamlFile, err := ioutil.ReadFile("C:\\Users\\huyifan01\\Documents\\ID-Generator\\conf\\conf.yaml")
+	//execpath, err := os.Executable()
+	//configFilePath := filepath.Join(execpath,"../conf/conf.yaml")
+	abspath, _ := filepath.Abs("../ID-Generator/conf/conf.yaml")
+	//abspath := "C:\\Users\\huyifan01\\Documents\\ID-Generator\\conf\\conf.yaml"
+	yamlFile, err := ioutil.ReadFile(abspath)
 	if err != nil{
-		log.Fatal("获取日志文件出错",err)
+		Log.Error("获取日志文件出错",err)
 	}
 
 	yaml.Unmarshal(yamlFile,&config)

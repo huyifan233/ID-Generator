@@ -32,7 +32,8 @@ func init(){
 	utils.GetYaml()
 	utils.ConnectEthereum()
 	utils.ConnectRedis()
-	utils.DeployContract()
+	//utils.DeployContract()
+	utils.NewContract()
 	//utils.ListeningTrasactionStatus()
 	core.Id[0] = '1'
 }

@@ -8,7 +8,6 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi/bind/backends"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"log"
 	"math/big"
@@ -96,25 +95,6 @@ func ConnectEthereum(){
 }
 
 
-func ListeningTrasactionStatus(hash common.Hash)(*types.Receipt){
-
-	for{
-
-		reciept, err := clientConnect.TransactionReceipt(context.TODO(), hash)
-
-		if err != nil {
-			log.Fatal("监听交易异常: ",err)
-		}
-
-		if reciept != nil{
-			return reciept
-		}
-		time.Sleep(100)
-
-	}
-}
-
-
 func DeployContract(){
 
 	auth, err := bind.NewTransactor(strings.NewReader(key),"abc")
@@ -137,6 +117,29 @@ func DeployContract(){
 	instance = token
 	autheration = auth
 
+}
+
+func NewContract(){
+
+	contractAddress := "0x23d67b243d501d1c890627bcde2d89e2f2bf3686"
+	auth, err := bind.NewTransactor(strings.NewReader(key),"abc")
+	if err != nil{
+		log.Fatal("解锁管理员账户失败",err)
+	}
+	alloc := make(core.GenesisAlloc)
+	alloc[auth.From] = core.GenesisAccount{Balance: big.NewInt(1337000000000)}
+
+	balance, err := clientConnect.BalanceAt(context.TODO(),auth.From,nil)
+	fmt.Println("From",auth.From.String())
+	fmt.Println("Balance", balance)
+	sim := backends.NewSimulatedBackend(alloc, 100000000)
+	token,err :=  generateId.NewGenerateId(common.HexToAddress(contractAddress), clientConnect)
+	if err != nil {
+		log.Fatal("部署智能合约失败",err)
+	}
+	simulate = sim
+	instance = token
+	autheration = auth
 }
 
 

@@ -3,10 +3,10 @@ pragma solidity >=0.4.22;
 contract GenerateId{
 
 
-    bytes32 public id = "1";
+    bytes32 public id;
 
     constructor () public {
-        id = "1";
+        id = "0";
     }
 
 

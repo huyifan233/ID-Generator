@@ -2,6 +2,8 @@
 
 一款基于区块链(以太坊)的ID生成器
 
+An ID generator based on blockchain(Ethereum)
+
 ## 用法
 - 按照conf/conf.yaml中的注释提示，修改conf/conf.yaml中的配置。
 - 在urls.go中启动程序。

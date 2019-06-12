@@ -1,11 +1,10 @@
 id-generator:
-   step: 1000
+   step: 1000  #表示id步长，比如每次请求获得1000个id,用完了或者用到一半了再去取
 url-config:
-  redis-url: 47.100.205.196:6379
-  ethereum-url: http://127.0.0.1:8546
-ethereum-config:
+  redis-url: 127.0.0.1:6379     #redis的ip:port，可不填
+  ethereum-url: http://127.0.0.1:8546 #以太坊的url,默认对端口是8545，因为我本地以太坊端口设置为了8546，所以这里我写了8546
+ethereum-config:   #ethereum-admin-account填的是你在以太坊上的eth.coinbase所对应的账户文件，就在你私链的数据文件夹的keystore里面, ethereum-admin-address就是对应的eth.coinbase所对应的地址, ethereum-admin-password不碍事对应的eth.coinbase的账户密码,ethereum-contract-address对应的是智能合约的地址，智能合约在conf/smartcontract下，将它部署到以太坊上获得地址
   ethereum-admin-account: '{"address":"4e0dc4ffa4609989c00183bc4a78b5ea70c33494","crypto":{"cipher":"aes-128-ctr","ciphertext":"ab3eaddba953c02861e539ed93f5c28945267c3435b63c2531bb669f2ebd96cc","cipherparams":{"iv":"d271f17fbd59f57d1de068702b3817e4"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"400aacf467e873f9232418231abcc535934bb027db758fd637ff0739ff6a84f6"},"mac":"00fb7135ce6dbfef42676b786f2459ce894040b686101a35ea726d5ee2780e76"},"id":"064efa43-f6d2-4673-8c27-c56d197695b2","version":3}'
   ethereum-admin-address: 0x4e0dc4ffa4609989c00183bc4a78b5ea70c33494
   ethereum-admin-password: abc
-  ethereum-id-step: 1000
   ethereum-contract-address: 0x6b79fe96c6d610622730d4750e653406e9ada1c8

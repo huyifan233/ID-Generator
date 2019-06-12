@@ -25,7 +25,6 @@ type EthereumConfig struct {
 	EthereumAdminAccount string `yaml:"ethereum-admin-account"`
 	EthereumAdminAddress string `yaml:"ethereum-admin-address"`
 	EthereumAdminPassword string `yaml:"ethereum-admin-password"`
-	EthereumIdStep string `yaml:"ethereum-id-step"`
 	EthereumContractAddress string `yaml:"ethereum-contract-address"`
 }
 

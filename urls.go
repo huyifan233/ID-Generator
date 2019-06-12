@@ -29,7 +29,7 @@ func init(){
 
 	utils.GetYaml()
 	utils.ConnectEthereum()
-	utils.ConnectRedis()
+	//utils.ConnectRedis()
 	//utils.DeployContract()
 	utils.NewContract()
 	utils.InitLogFactory()

@@ -37,7 +37,7 @@ func GetId(w http.ResponseWriter, r *http.Request){
 
 
 	validLen = utils.GetValidLen(Id)
-	utils.Log.Info("有效长度: ",validLen)
+	//utils.Log.Info("有效长度: ",validLen)
 	utils.Log.Info("增加后的Id值: ",string(Id[:validLen]))
 
 	//channelMutex.Lock()

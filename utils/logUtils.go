@@ -39,9 +39,5 @@ func InitLogFactory(){
 
 func main() {
 
-	Log.Info("info")
-	Log.Notice("notice")
-	Log.Warning("warning")
-	Log.Error("xiaorui.cc")
-	Log.Critical("太严重了")
+	
 }
